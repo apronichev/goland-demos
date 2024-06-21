@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+
+    pg_16.X:
+        # jdbc:postgresql://localhost:54336/guest?user=guest&password=guest
+        container_name: pg_16.X
+        ports:
+            - "54336:5432"
+        image: postgres:16-alpine
+        env_file: ./postgres.env
+        healthcheck:
+            test: "exit 0"
+            
+    cockroachdb_23.1.X:
+        container_name: cockroachdb_23.1.X
+        image: cockroachdb/cockroach:latest-v23.1
+        hostname: roach4
+        command: [start-single-node, --insecure]
+        ports:
+            - "26262:26257"
+        healthcheck:
+            test: "exit 0"
