@@ -1,0 +1,43 @@
+### Get all users
+# @name GetUsers
+GET http://localhost:8080/users
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.log(response.body);
+    });
+%}
+
+###
+
+### Get user by ID
+# @name GetUserById
+GET http://localhost:8080/user?id=1
+Accept: application/json
+
+> {%
+    client.test("User ID is 1", function () {
+        client.assert(response.body.id === 1, "User ID is not 1");
+    });
+%}
+
+###
+
+### Add a new user
+# @name AddUser
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Charlie",
+  "email": "charlie@example.com"
+}
+
+> {%
+    client.test("User added successfully", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}

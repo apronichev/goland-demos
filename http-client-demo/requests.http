@@ -1,0 +1,21 @@
+#### Get all users
+#GET http://localhost:8080/users
+#Accept: application/json
+#
+#### Get user by ID
+#GET http://localhost:8080/user?id=1
+#Accept: application/json
+#
+#### Add a new user
+#POST http://localhost:8080/user
+#Content-Type: application/json
+#
+#{
+#  "id": 3,
+#  "name": "Charlie",
+#  "email": "charlie@example.com"
+#}
+
+### Type your request below
+
+      
