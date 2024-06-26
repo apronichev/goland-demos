@@ -3,6 +3,14 @@ package model
 import "errors"
 
 // todo paste TodoItem from json
+/*
+{
+  id: 0,
+  title: "Some item",
+  done: false,
+  due: "11.12.2024"
+}
+*/
 
 type TodoItem struct {
 	Id    int    `json:"id"`

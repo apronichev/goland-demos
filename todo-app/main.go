@@ -11,6 +11,27 @@ import (
 // todo invoke "implement missing methods" quick fix on model.TodoItem
 var todoStorage storage.Storage[*model.TodoItem] = storage.NewInMemoryStorage[*model.TodoItem]()
 
+func main() {
+	todoStorage.Put(&model.TodoItem{
+		Id:    0,
+		Title: "Todo 1",
+		Done:  false,
+		Due:   "23.07.2024",
+	})
+	todoStorage.Put(&model.TodoItem{
+		Id:    1,
+		Title: "Todo 2",
+		Done:  true,
+		Due:   "01.01.2023",
+	})
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
+	// todo invoke "Generate request in HTTP Client"
+	http.HandleFunc("/todos", todoHandler)
+	err := http.ListenAndServe(":8080", nil)
+	log.Fatal(err)
+}
+
 func todoHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
@@ -48,11 +69,4 @@ func createOrUpdateTodo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	todoStorage.Put(&item)
-}
-
-func main() {
-	// todo invoke "Generate request in HTTP Client"
-	http.HandleFunc("/", todoHandler)
-	err := http.ListenAndServe(":8080", nil)
-	log.Fatal(err)
 }
