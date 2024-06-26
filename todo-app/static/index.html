@@ -9,11 +9,22 @@
 
 <div id="app">
     <button @click="loadTodos">load</button>
-    <ul>
-        <li v-for="todo in todos">{{ todo.title }}
-            <button @click="deleteTodo(todo)">delete</button>
-        </li>
-    </ul>
+    <table>
+        <tr>
+            <th>Todo ID</th>
+            <th>Todo Title</th>
+            <th>Done</th>
+            <th>Due</th>
+            <th>Action</th>
+        </tr>
+        <tr v-for="todo in todos">
+            <td>{{ todo.id }}</td>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.due }}</td>
+            <td>{{ todo.done }}</td>
+            <td><button @click="deleteTodo(todo)">delete</button></td>
+        </tr>
+    </table>
 </div>
 
 <script type="module">

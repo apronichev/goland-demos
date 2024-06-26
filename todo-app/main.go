@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 	"todo-app/model"
 	"todo-app/storage"
 )
@@ -24,10 +25,12 @@ func main() {
 		Done:  true,
 		Due:   "01.01.2023",
 	})
+	// todo invoke "inline variable" on fs
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 	// todo invoke "Generate request in HTTP Client"
 	http.HandleFunc("/todos", todoHandler)
+	http.HandleFunc("/todos/{id}", todoHandler)
 	err := http.ListenAndServe(":8080", nil)
 	log.Fatal(err)
 }
@@ -38,8 +41,20 @@ func todoHandler(w http.ResponseWriter, r *http.Request) {
 		listTodos(w, r)
 	case http.MethodPost:
 		createOrUpdateTodo(w, r)
+	case http.MethodDelete:
+		deleteTodo(w, r)
 		// todo type case and see FLCC completion for "case http.MethodPut:"
 	}
+}
+
+func deleteTodo(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		// todo FLCC suggests here complete line!
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	todoStorage.Remove(id)
 }
 
 func listTodos(w http.ResponseWriter, r *http.Request) {
