@@ -9,21 +9,21 @@
     }
 </script>
 
-<div id="app"></div>
+<link rel="stylesheet" href="https://andybrewer.github.io/mvp/mvp.css">
 
 <script type="module">
     // todo delete node_modules and invoke "npm install"
     import {createApp} from 'vue'
-    import { createMemoryHistory, createRouter } from 'vue-router'
+    import {createMemoryHistory, createRouter} from 'vue-router'
 
     import App from './App.js'
     import TodoList from './TodoList.js'
     import TodoEdit from "./TodoEdit.js";
 
     const routes = [
-        { path: '/', component: TodoList },
-        { path: '/add', component: TodoEdit },
-        { path: '/edit/:id', component: TodoEdit },
+        {path: '/', component: TodoList},
+        {path: '/add', component: TodoEdit},
+        {path: '/edit/:id', component: TodoEdit},
     ]
 
     const router = createRouter({
@@ -35,4 +35,8 @@
         .use(router)
         .mount('#app')
 </script>
+
+<body>
+<div id="app"></div>
+</body>
 </html>

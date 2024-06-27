@@ -35,11 +35,17 @@ export default {
     },
     template: `
       <h1>{{ todo.id ? "Edit Todo" : "Create New Todo" }}</h1>
-      <p v-if="error">{{ error }}</p>
-      <label for="title">Title</label><input id="title" type="text" v-model="todo.title">
-      <label for="due">Due</label><input id="due" type="text" v-model="todo.due">
-      <label for="done">Done</label><input id="done" type="checkbox" v-model="todo.done">
-      <button @click="updateTodo">Save</button>
-      <button @click="this.$router.push('/')">Cancel</button>
+      <form>
+        <article v-if="error">
+          <aside>{{ error }}</aside>
+        </article>
+        <label for="title">Title</label><input id="title" type="text" v-model="todo.title">
+        <label for="due">Due</label><input id="due" type="text" v-model="todo.due">
+        <label for="done">Done</label><input id="done" type="checkbox" v-model="todo.done">
+        <br/>
+        <button @click.prevent="updateTodo">Save</button>
+        &nbsp;
+        <button @click.prevent="this.$router.push('/')">Cancel</button>
+      </form>
     `
 }

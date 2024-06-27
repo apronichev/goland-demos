@@ -31,7 +31,8 @@ export default {
     },
     template: `
       <h1>Todo List</h1>
-      <table>
+      <table class="table-auto">
+        <thead>
         <tr>
           <th>ID</th>
           <th>Title</th>
@@ -39,17 +40,21 @@ export default {
           <th>Done</th>
           <th>Action</th>
         </tr>
+        </thead>
+        <tbody>
         <tr v-for="todo in todos">
           <td>{{ todo.id }}</td>
           <td>{{ todo.title }}</td>
           <td>{{ todo.due }}</td>
           <td>{{ todo.done }}</td>
           <td>
-            <button @click="gotoEdit(todo.id)">Edit</button>
-            <button @click="deleteTodo(todo)">Delete</button>
+            <a href="#" @click.prevent="gotoEdit(todo.id)">Edit</a>
+            /
+            <a href="#" @click.prevent="deleteTodo(todo)">Delete</a>
           </td>
         </tr>
+        </tbody>
       </table>
-      <button @click="addTodo">Add Todo</button>
+      <div><button @click="addTodo">Add Todo</button></div>
     `
 }
