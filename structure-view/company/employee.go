@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-// todo open the 'Structure' tool window to have a
+// todo open the 'Structure' tool window
 type Employee struct {
 	Name   string
 	Age    int
