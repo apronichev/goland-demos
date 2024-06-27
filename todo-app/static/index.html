@@ -2,7 +2,9 @@
 <script type="importmap">
     {
       "imports": {
-        "vue": "https://unpkg.com/vue@3.4.30/dist/vue.esm-browser.js"
+        "vue": "https://unpkg.com/vue@3.4.30/dist/vue.esm-browser.prod.js",
+        "vue-router": "https://unpkg.com/vue-router@4.4.0/dist/vue-router.esm-browser.js",
+        "@vue/devtools-api": "https://unpkg.com/@vue/devtools-api@6.6.3/lib/esm/index.js"
       }
     }
 </script>
@@ -12,8 +14,25 @@
 <script type="module">
     // todo delete node_modules and invoke "npm install"
     import {createApp} from 'vue'
-    import App from './App.js'
+    import { createMemoryHistory, createRouter } from 'vue-router'
 
-    createApp(App).mount('#app')
+    import App from './App.js'
+    import TodoList from './TodoList.js'
+    import TodoEdit from "./TodoEdit.js";
+
+    const routes = [
+        { path: '/', component: TodoList },
+        { path: '/add', component: TodoEdit },
+        { path: '/edit/:id', component: TodoEdit },
+    ]
+
+    const router = createRouter({
+        history: createMemoryHistory(),
+        routes,
+    })
+
+    createApp(App)
+        .use(router)
+        .mount('#app')
 </script>
 </html>

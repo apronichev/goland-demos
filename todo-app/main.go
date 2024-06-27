@@ -14,13 +14,11 @@ var todoStorage storage.Storage[*model.TodoItem] = storage.NewInMemoryStorage[*m
 
 func main() {
 	todoStorage.Put(&model.TodoItem{
-		Id:    0,
 		Title: "Todo 1",
 		Done:  false,
 		Due:   "23.07.2024",
 	})
 	todoStorage.Put(&model.TodoItem{
-		Id:    1,
 		Title: "Todo 2",
 		Done:  true,
 		Due:   "01.01.2023",
@@ -38,12 +36,34 @@ func main() {
 func todoHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
+		if r.PathValue("id") != "" {
+			loadTodo(w, r)
+			return
+		}
 		listTodos(w, r)
 	case http.MethodPost:
 		createOrUpdateTodo(w, r)
 	case http.MethodDelete:
 		deleteTodo(w, r)
 		// todo type case and see FLCC completion for "case http.MethodPut:"
+	}
+}
+
+func loadTodo(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	var todo = todoStorage.Get(id)
+	if todo == nil {
+		// todo FLCC works as a charm here!
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	err2 := json.NewEncoder(w).Encode(todo)
+	if err2 != nil {
+		http.Error(w, err2.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -80,7 +100,7 @@ func createOrUpdateTodo(w http.ResponseWriter, r *http.Request) {
 	// todo invoke "create method `Validate`" quick fix on Validate()
 	err = item.Validate()
 	if err != nil {
-		http.Error(w, "something went wrong", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	todoStorage.Put(&item)

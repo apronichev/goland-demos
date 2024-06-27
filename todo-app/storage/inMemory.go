@@ -2,16 +2,20 @@ package storage
 
 import "sync"
 
-func NewInMemoryStorage[T Item]() *InMemoryStorage[T] {
-	return &InMemoryStorage[T]{
-		items: map[int]T{},
-		mutex: sync.RWMutex{},
-	}
-}
+const NO_ID = 0
 
 type InMemoryStorage[T Item] struct {
-	items map[int]T
-	mutex sync.RWMutex
+	sequence int
+	items    map[int]T
+	mutex    sync.RWMutex
+}
+
+func NewInMemoryStorage[T Item]() *InMemoryStorage[T] {
+	return &InMemoryStorage[T]{
+		sequence: NO_ID,
+		items:    map[int]T{},
+		mutex:    sync.RWMutex{},
+	}
 }
 
 func (s *InMemoryStorage[T]) Get(id int) T {
@@ -33,9 +37,12 @@ func (s *InMemoryStorage[T]) GetAll() []T {
 func (s *InMemoryStorage[T]) Put(item T) T {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	prev := s.items[item.Identity()]
+	if item.Identity() == NO_ID {
+		s.sequence++
+		item.SetIdentity(s.sequence)
+	}
 	s.items[item.Identity()] = item
-	return prev
+	return item
 }
 
 func (s *InMemoryStorage[T]) Remove(id int) T {

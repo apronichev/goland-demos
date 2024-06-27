@@ -23,6 +23,10 @@ func (i *TodoItem) Identity() int {
 	return i.Id
 }
 
+func (i *TodoItem) SetIdentity(identity int) {
+	i.Id = identity
+}
+
 func (i *TodoItem) Validate() error {
 	if i.Title == "" {
 		return errors.New("title is required")
