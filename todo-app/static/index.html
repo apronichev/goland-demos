@@ -2,60 +2,18 @@
 <script type="importmap">
     {
       "imports": {
-        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        "vue": "https://unpkg.com/vue@3.4.30/dist/vue.esm-browser.js"
       }
     }
 </script>
 
-<div id="app">
-    <button @click="loadTodos">load</button>
-    <table>
-        <tr>
-            <th>Todo ID</th>
-            <th>Todo Title</th>
-            <th>Done</th>
-            <th>Due</th>
-            <th>Action</th>
-        </tr>
-        <tr v-for="todo in todos">
-            <td>{{ todo.id }}</td>
-            <td>{{ todo.title }}</td>
-            <td>{{ todo.due }}</td>
-            <td>{{ todo.done }}</td>
-            <td><button @click="deleteTodo(todo)">delete</button></td>
-        </tr>
-    </table>
-</div>
+<div id="app"></div>
 
 <script type="module">
     // todo delete node_modules and invoke "npm install"
     import {createApp} from 'vue'
+    import App from './App.js'
 
-    createApp({
-        data() {
-            return {
-                todos: {}
-            }
-        },
-        methods: {
-            async loadTodos() {
-                let response = await fetch("http://localhost:8080/todos")
-                let todos = await response.json()
-                this.todos = {}
-                for (let todo of todos) {
-                    this.todos[todo.id] = todo
-                }
-            },
-            async deleteTodo(todo) {
-                let response = await fetch(`http://localhost:8080/todos/${todo.id}`, {"method": "DELETE"})
-                if (response.ok) {
-                    delete this.todos[todo.id]
-                }
-            }
-        },
-        mounted() {
-            this.loadTodos()
-        }
-    }).mount('#app')
+    createApp(App).mount('#app')
 </script>
 </html>
