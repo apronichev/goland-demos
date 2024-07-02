@@ -6,6 +6,7 @@ type Item interface {
 }
 
 type Storage[T Item] interface {
+	Init()
 	Get(id int) T
 	GetAll() []T
 	Put(item T) T // todo rename method

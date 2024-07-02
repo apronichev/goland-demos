@@ -10,6 +10,10 @@ type InMemoryStorage[T Item] struct {
 	mutex    sync.RWMutex
 }
 
+func (s *InMemoryStorage[T]) Init() {
+	// nothing to init
+}
+
 func NewInMemoryStorage[T Item]() *InMemoryStorage[T] {
 	return &InMemoryStorage[T]{
 		sequence: NO_ID,

@@ -10,9 +10,11 @@ import (
 )
 
 // todo invoke "implement missing methods" quick fix on model.TodoItem
-var todoStorage storage.Storage[*model.TodoItem] = storage.NewInMemoryStorage[*model.TodoItem]()
+// todo open todos.db in database inspector
+var todoStorage storage.Storage[*model.TodoItem] = storage.NewSQLiteStorage("todos.db")
 
 func main() {
+	todoStorage.Init()
 	todoStorage.Put(&model.TodoItem{
 		Title: "Todo 1",
 		Done:  false,
