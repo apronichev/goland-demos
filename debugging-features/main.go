@@ -20,7 +20,7 @@ func main() {
         "postcode": 73617
       },
       "username": "purplesnake503",
-      "password": "Zelda@",
+      "password": "myZelda@",
       "picture": "img/41.jpg"
     }
 `
