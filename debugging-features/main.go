@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
 	"time"
 )
 
 func main() {
-	userJSON := `
+	j := `
     {
       "email": "noah.poulsen@example.com",
       "gender": "male",
@@ -26,7 +27,7 @@ func main() {
 `
 
 	registrationDate, _ := time.Parse("2006-01", "2022-11")
-	tellUserPassword(userJSON, registrationDate)
+	tellUserPassword(j, registrationDate)
 }
 
 func tellUserPassword(userData string, t time.Time) {
@@ -36,7 +37,7 @@ func tellUserPassword(userData string, t time.Time) {
 		return
 	}
 	fmt.Println(verifyPassword(user.Password))
-	fmt.Println("%s %s's password: %s. Account created: %s", user.FirstName, user.LastName, user.Password, t.Local())
+	fmt.Printf("%s %s's password: %s. The '%s' email is %s. Account created: %s", user.FirstName, user.LastName, user.Password, user.Email, IsValidEmail(user.Email), t.Local())
 }
 
 func verifyPassword(s string) (sixOrMore, number, upper, special bool) {
@@ -57,4 +58,12 @@ func verifyPassword(s string) (sixOrMore, number, upper, special bool) {
 	}
 	sixOrMore = letters >= 6
 	return
+}
+
+func IsValidEmail(email string) string {
+	var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+	if emailRegex.MatchString(email) {
+		return "valid"
+	}
+	return "invalid"
 }
