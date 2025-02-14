@@ -5,7 +5,24 @@ import (
 	"fmt"
 	"regexp"
 	"time"
+	"unicode"
 )
+
+type T struct {
+	Email     string `json:"email"`
+	Gender    string `json:"gender"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Location  struct {
+		Street   string `json:"street"`
+		City     string `json:"city"`
+		State    string `json:"state"`
+		Postcode int    `json:"postcode"`
+	} `json:"location"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Picture  string `json:"picture"`
+}
 
 func main() {
 	j := `
@@ -66,4 +83,24 @@ func IsValidEmail(email string) string {
 		return "valid"
 	}
 	return "invalid"
+}
+
+func IsNumber(c rune) bool {
+	return unicode.IsNumber(c)
+}
+
+func IsUpper(c rune) bool {
+	return unicode.IsUpper(c)
+}
+
+func IsPunct(c rune) bool {
+	return unicode.IsPunct(c)
+}
+
+func IsSymbol(c rune) bool {
+	return unicode.IsSymbol(c)
+}
+
+func IsLetter(c rune) bool {
+	return unicode.IsLetter(c) || c == ' '
 }
