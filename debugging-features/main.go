@@ -38,7 +38,7 @@ func tellUserPassword(userData string, t time.Time) {
 		return
 	}
 	fmt.Println(verifyPassword(user.Password))
-	fmt.Println("%s %s's password: %s. The '%s' email is %s. Account created: %s", user.FirstName, user.LastName, user.Password, user.Email, IsValidEmail(user.Email), t.Local())
+	fmt.Println("%s %s's password: %s. The '%s' email is %s. Account created: %s\n", user.FirstName, user.LastName, user.Password, user.Email, IsValidEmail(user.Email), t.Local())
 }
 
 func verifyPassword(s string) (sixOrMore, number, upper, special bool) {

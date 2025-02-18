@@ -25,7 +25,7 @@ func TestVerifyPassword(t *testing.T) {
 		},
 		{
 			name:          "Password too short",
-			password:      "Ab@1",
+			password:      "Ab1",
 			wantSixOrMore: false,
 			wantNumber:    true,
 			wantUpper:     true,
