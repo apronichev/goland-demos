@@ -1,0 +1,39 @@
+/* Universal Selector */
+* { margin: 0; padding: 0; }
+
+/* Type Selector */
+body { font-family: Arial, sans-serif; }
+
+/* Class Selector */
+.container { width: 100%; }
+
+body {
+    background-image: url('https://example.com/background.jpg');
+    font-face {
+      src: url('font/Heligthon_Signature.otf')
+    }
+  }
+
+/* ID Selector */
+#main-header { background-color: #f4f4f4; }
+
+/* Descendant Selector */
+ul li { list-style-type: none; }
+
+/* Adjacent Sibling Selector */
+h1 + p { color: gray; }
+
+/* General Sibling Selector */
+h1 ~ p { font-size: 14px; }
+
+/* Attribute Selector */
+input[type="text"] { border: 1px solid #ccc; }
+
+/* Pseudo-class Selector */
+a:hover { color: red; }
+
+/* Pseudo-element Selector */
+p::first-line { font-weight: bold; }
+
+/* Child Selector */
+div > p { margin: 10px; }

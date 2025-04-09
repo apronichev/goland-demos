@@ -1,0 +1,37 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Go WASM Server</title>
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
+            .then((result) => {
+                go.run(result.instance);
+                console.log("WASM loaded");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+            
+        function makeRequest(path) {
+            const response = goHandleRequest(path);
+            document.getElementById('response').textContent = JSON.stringify(response, null, 2);
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <h1>Go WASM Server Example</h1>
+    
+    <button onclick="makeRequest('/api/hello')">GET /api/hello</button>
+    <button onclick="makeRequest('/api/time')">GET /api/time</button>
+    <button onclick="makeRequest('/api/unknown')">GET /api/unknown</button>
+    
+    <h2>Server Response:</h2>
+    <pre id="response">Make a request to see response</pre>
+</body>
+</html>
