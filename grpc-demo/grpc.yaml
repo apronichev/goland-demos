@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: User Service API
+  description: REST API specification for User Service
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      operationId: getUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserResponse'
+              example:
+                id: 1
+                name: "Alice"
+                email: "alice@example.com"
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update user
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            example:
+              name: "Alice Updated"
+              email: "alice.updated@example.com"
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+              example:
+                success: true
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+              example:
+                success: true
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /users:
+    post:
+      summary: Create new user
+      operationId: createUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            example:
+              name: "Alice"
+              email: "alice@example.com"
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+              example:
+                id: 1
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    GetUserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: "Alice"
+        email:
+          type: string
+          example: "alice@example.com"
+      required:
+        - id
+        - name
+        - email
+
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Alice"
+        email:
+          type: string
+          example: "alice@example.com"
+      required:
+        - name
+        - email
+
+    CreateUserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+      required:
+        - id
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Alice Updated"
+        email:
+          type: string
+          example: "alice.updated@example.com"
+      required:
+        - name
+        - email
+
+    UpdateUserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+      required:
+        - success
+
+    DeleteUserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+      required:
+        - success
+
+tags:
+  - name: Users
+    description: Operations about users
