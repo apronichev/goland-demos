@@ -1,40 +1,54 @@
-# Running the gRPC demo
+# Running the gRPC Demo
 
-1. Run the server in `grpc-demo/main.go` (use the `main` function). The server listens to requests on two ports: 50051 for gRPC and 8080 for HTTP. It also serves the OpenAPI spec `grpc.yaml`. 
-2. Click **View | Tool Windows | Endpoints**.
-3. In the **Endpoints** window, click **Add OpenAPI specifications**.
-4. In the **Remote Specifications** table, click **Add** and paste the following link: `http://localhost:8080/grpc.yaml`. 
-5. Click **OK** or **Apply Changes**. Endpoints should be automatically detected and displayed in the **Endpoints** window.
+1. Run the server in `grpc-demo/main.go` using the `main` function.  
+   The server listens for requests on two ports:
+    - `50051` for gRPC
+    - `8080` for HTTP and serves the OpenAPI spec `grpc.yaml`
 
-## Running HTTP methods from the Endpoints tool window
+2. Go to **View | Tool Windows | Endpoints**.
+3. In the **Endpoints** tool window, click **Add OpenAPI Specifications**.
+4. In the **Remote Specifications** table, click **Add**, then paste the following URL:  
+   `http://localhost:8080/grpc.yaml`
+5. Click **OK** or **Apply Changes**.  
+   The endpoints will appear automatically in the **Endpoints** tool window.
 
-1. Click **View | Tool Windows | Endpoints**.
-2. Click the `POST` method. On the **HTTP Client** tab, type data into `name` and `email` fields.
+---
+
+## Running HTTP Methods from the Endpoints Tool Window
+
+1. Go to **View | Tool Windows | Endpoints**.
+2. Click the `POST` method. In the **HTTP Client** tab, enter values for the `name` and `email` fields.
 3. Click **Submit Request**.
 
-Alternatively,
+**Alternatively:**
 
-1. Double-click any method in the **Endpoints** tool window. The OpenAPI specification will open.
-2. In the WYSIWYG presentation of the specification, you can run requests using preconfigured example data. 
+1. Double-click any method in the **Endpoints** tool window to open the OpenAPI specification.
+2. In the visual editor (WYSIWYG), you can run requests using example data.
 
+---
 
-## Running gRPC requests
+## Running gRPC Requests
 
-1. Open `user.proto` file in `grpc-demo/proto/`.
-2. In `UserService` definition, click gutter icons against service methods (for example, against the line `rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);`).
-3. Change the port to `50051`.
-4. Paste the body for the request. For the `CreateUser` method, it might be:
-```
-GRPC http://localhost:50051 user.UserService/CreateUser
-Content-Type: application/grpc
+1. Open `user.proto` in `grpc-demo/proto/`.
+2. In the `UserService` definition, click the gutter icon next to a method  
+   (e.g., `rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);`).
+3. Set the port to `50051`.
+4. Paste the request body. For example:
 
-{
-  "name": "Alice",
-  "email": "alice@example.com"
-}
-```
+    ```http
+    GRPC http://localhost:50051 user.UserService/CreateUser
+    Content-Type: application/grpc
 
-## Examples for body of other gRPC requests
+    {
+      "name": "Alice",
+      "email": "alice@example.com"
+    }
+    ```
+
+---
+
+## Examples of gRPC Request Bodies
+
 ```http
 ### Get User by ID
 GRPC http://localhost:50051 user.UserService/GetUser
@@ -76,4 +90,3 @@ Content-Type: application/grpc
 {
   "id": 1
 }
-```
