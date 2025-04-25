@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     noteForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const content = noteInput.value;
+        const content = noteInput.value.trim();
+
+        if (!content) return; // Don't submit empty notes
+
         const response = await fetch('/notes', {
             method: 'POST',
             headers: {
@@ -13,16 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ content })
         });
+
         if (response.ok) {
             noteInput.value = '';
-            loadNotes();
+            await loadNotes();
+        } else {
+            console.error('Failed to add note');
         }
     });
 
     async function loadNotes() {
-        const response = await fetch('/notes');
-        const notes = await response.json();
-        notesList.innerHTML = notes.map(note => `<li>${note}</li>`).join('');
+        try {
+            const response = await fetch('/notes');
+            const notes = await response.json();
+
+            if (Array.isArray(notes)) {
+                notesList.innerHTML = notes
+                    .map((note, index) => `<li>Note ${index + 1}: ${note.content}</li>`)
+                    .join('');
+            } else {
+                console.error('Unexpected response format:', notes);
+            }
+        } catch (error) {
+            console.error('Error loading notes:', error);
+            notesList.innerHTML = '<li>Error loading notes</li>';
+        }
     }
 
     loadNotes();

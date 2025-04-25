@@ -20,6 +20,7 @@ func main() {
 func notesHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
+		w.Header().Set("Content-Type", "application/json")
 		notes, err := getNotes()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
