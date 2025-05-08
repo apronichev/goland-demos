@@ -38,7 +38,7 @@ func startDjangoServer() (*exec.Cmd, error) {
 
 	// Copy the current environment and set up Python paths
 	env := os.Environ()
-	env = append(env, "PYTHONPATH=/Users/jetbrains/myProjects/goland-demos/.venv/lib/python3.13/site-packages:"+os.Getenv("PYTHONPATH"))
+	env = append(env, "PYTHONPATH=/Users/jetbrains/myProjects/demos/.venv/lib/python3.13/site-packages:"+os.Getenv("PYTHONPATH"))
 	cmd.Env = env
 
 	err := cmd.Start()

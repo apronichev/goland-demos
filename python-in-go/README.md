@@ -35,20 +35,20 @@ which python3 # Note this path
 pip3 show django
 ``` 
 
-Replace the paths in `python-in-goland/main.go` (line 41).
+Replace the paths in `python-in-go/main.go` (line 41).
 ```python
-env = append(env, "PYTHONPATH=/Users/jetbrains/myProjects/goland-demos/.venv/lib/python3.13/site-packages:"+os.Getenv("PYTHONPATH"))
+env = append(env, "PYTHONPATH=/Users/jetbrains/myProjects/demos/.venv/lib/python3.13/site-packages:"+os.Getenv("PYTHONPATH"))
 ``` 
 
 ### 3. Django Setup
 ```bash 
-cd python-in-goland/pyapi 
+cd python-in-go/pyapi 
 python3 manage.py migrate
 ``` 
 
 ## Running the Application
 
-1. Open `python-in-goland/main.go` and run the `main` function.
+1. Open `python-in-go/main.go` and run the `main` function.
 
 The application will:
 - Start the Django server
