@@ -1,4 +1,4 @@
-// File: myapp/main.go
+// File: myapp/main_test.go
 package main
 
 import (

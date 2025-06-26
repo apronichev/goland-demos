@@ -8,7 +8,7 @@ import (
 
 func main() {
 	initDB()
-	http.HandleFunc("/notes", notesHandler)
+	http.HandleFunc("GET /notes", notesHandler)
 	http.Handle("/", http.FileServer(http.Dir("./client")))
 
 	log.Println("Server started at :8080")

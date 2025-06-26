@@ -1,0 +1,3 @@
+package static
+
+func UnusedStaticFunc() {}

@@ -1,0 +1,3 @@
+package javascript
+
+func UnusedJSFunc() {}

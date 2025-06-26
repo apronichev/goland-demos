@@ -23,7 +23,7 @@ func main() {
       },
       "username": "purplesnake503",
       "password": "myZelda@",
-      "picture": "img/41.jpg"
+      "picture": "content/41.jpg"
     }
 `
 
