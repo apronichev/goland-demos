@@ -21,7 +21,7 @@ type Product struct {
 }
 
 func main() {
-	// Build with: GOEXPERIMENT=jsonv2 go run main.go
+	// Build with: GOEXPERIMENT=jsonv2 go run main_test.go
 	fmt.Println("=== JSON v2 Experimental Features ===\n")
 
 	// Sample data
