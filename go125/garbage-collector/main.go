@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// Small object that GreenTea GC handles better
 type CacheEntry struct {
 	Key   string
 	Value string
@@ -17,13 +16,10 @@ type CacheEntry struct {
 }
 
 func main() {
-	fmt.Println("🧪 Go 1.25 GreenTea GC - Measurable Benefits Demo")
-	fmt.Println("================================================")
-
 	if isGreenTeaGC() {
-		fmt.Println("✅ Running with GreenTea GC")
+		fmt.Println("Running with GreenTea" + "GC")
 	} else {
-		fmt.Println("📦 Running with standard GC")
+		fmt.Println("Running with standard " + "GC")
 	}
 
 	// Test 1: Many small objects performance
@@ -115,7 +111,7 @@ func showMemoryStats() {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 
-	fmt.Println("\n📈 Memory Statistics:")
+	fmt.Println("\nMemory Statistics:")
 	fmt.Printf("  • Total GC pause time: %.2f ms\n", float64(m.PauseTotalNs)/1_000_000)
 	fmt.Printf("  • Objects allocated: %d\n", m.Mallocs)
 	fmt.Printf("  • Objects freed: %d\n", m.Frees)

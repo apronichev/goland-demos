@@ -68,20 +68,4 @@ func TestUnsafeAllocations(t *testing.T) {
 			_ = make([]byte, 1024)
 		})
 	*/
-
-	out := t.Output()
-	fmt.Fprintln(out, "\n🛡️ Go 1.25 Safety Feature:")
-	fmt.Fprintln(out, "  • AllocsPerRun + t.Parallel() = PANIC")
-	fmt.Fprintln(out, "  • Why? Parallel tests make measurements unreliable")
-	fmt.Fprintln(out, "  • Solution: Remove t.Parallel() for allocation tests")
-}
-
-func main() {
-	fmt.Println(`
-🧪 Go 1.25 Testing Features Demo
-
-What you see in the test output:
-1️⃣ === ATTR lines: Test metadata tags
-2️⃣ Clean output: No file:line numbers
-3️⃣ Safe allocation counting`)
 }
