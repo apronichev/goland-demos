@@ -4,30 +4,9 @@ import (
 	"fmt"
 )
 
-type Speaker interface {
-	Present(name string) string
-	Say(name string) string
-	Inspire() string
-}
-
 type Persona struct {
 	firstName string
 	lastName  string
-}
-
-func (p Persona) Present(name string) string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (p Persona) Say(name string) string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (p Persona) Inspire() string {
-	//TODO implement me
-	panic("implement me")
 }
 
 func main() {
