@@ -9,21 +9,6 @@ type Persona struct {
 	lastName  string
 }
 
-func (p Persona) Present(name string) string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (p Persona) Say(name string) string {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (p Persona) Inspire() string {
-	//TODO implement me
-	panic("implement me")
-}
-
 func main() {
 	sum := add(3, 4)
 	speaker1 := Persona{"John", "Doe"}
