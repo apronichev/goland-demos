@@ -8,7 +8,7 @@ import (
 
 func main() {
 	initDB()
-	http.HandleFunc("GET /notes", notesHandler)
+	http.HandleFunc("/notes", notesHandler)
 	http.Handle("/", http.FileServer(http.Dir("./client")))
 
 	log.Println("Server started at :8080")
@@ -40,6 +40,11 @@ func notesHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.WriteHeader(http.StatusCreated)
+	case "DELETE":
+		if r.URL.Query().Get("id") == "" {
+			http.Error(w, "Missing 'id' parameter", http.StatusBadRequest)
+			return
+		}
 	default:
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}

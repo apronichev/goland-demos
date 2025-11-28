@@ -5,7 +5,6 @@ import (
 	"structure-view/company"
 )
 
-// todo using AI Assistant, refactor the code below
 func main() {
 	// Create employees
 	employee1 := company.Employee{Name: "Alice", Age: 28, Salary: 50000, Email: "alice@example.com"}

@@ -4,23 +4,34 @@ import (
 	"fmt"
 )
 
+// Persona represents a person with first and last names
 type Persona struct {
-	firstName string
-	lastName  string
+	FirstName string
+	LastName  string
+}
+
+// NewPersona creates a new Persona instance
+func NewPersona(firstName, lastName string) *Persona {
+	return &Persona{
+		FirstName: firstName,
+		LastName:  lastName,
+	}
+}
+
+// Greet returns a greeting message from this persona
+func (p *Persona) Greet() string {
+	return fmt.Sprintf("Hello, I am Mr. %s. Give me a list of numbers and I will summarize them.", p.LastName)
 }
 
 func main() {
+	speaker := NewPersona("John", "Doe")
+
+	fmt.Println(speaker.Greet())
+
 	sum := add(3, 4)
-	speaker1 := Persona{"John", "Doe"}
-	greeting := greet(speaker1.lastName)
-	fmt.Println(greeting)
-	fmt.Printf("Answer is %v.", sum)
+	fmt.Printf("Answer is %v.\n", sum)
 }
 
-func add(a int, b int) int {
+func add(a, b int) int {
 	return a + b
-}
-
-func greet(name string) string {
-	return "Hello, I am mr. " + name + ". Give me a list of numbers and I will summarize them."
 }
