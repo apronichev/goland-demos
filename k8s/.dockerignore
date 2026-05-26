@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+FIXES.md
+DEPLOYMENT_GUIDE.md
+
+# Scripts
+Makefile
+*.sh
+quickstart.sh
+debug-pod.sh
+
+# Kubernetes manifests (not needed in container)
+k8s/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+k8s-demo
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go test and coverage files
+*.test
+*.prof
+coverage.txt
+coverage.html
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Logs
+*.log
+

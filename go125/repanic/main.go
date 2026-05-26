@@ -1,4 +1,4 @@
-package main
+package repanic
 
 import (
 	"fmt"
@@ -31,7 +31,7 @@ func middlewareLayer() {
 	riskyOperation()
 }
 
-func main() {
+func repanic() {
 	fmt.Println("Starting program...")
 	middlewareLayer()
 }

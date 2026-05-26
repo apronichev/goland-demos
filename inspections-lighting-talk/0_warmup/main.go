@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+type Inefficient struct {
+	A byte  // 1 byte
+	B int32 // 4 bytes
+	C byte  // 1 byte
+}
+
 type Point struct {
 	X, Y float64
 }

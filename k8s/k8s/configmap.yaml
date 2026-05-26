@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-demo-config
+  namespace: k8s-demo
+data:
+  app.name: k8s-demo
+  app.version: 1.0.0
+  db.url: jdbc:postgresql://host.docker.internal:54338/guest
+  log.level: info
+  demo.message: This ConfigMap was created by the Go Kubernetes client!
+  environment: development
