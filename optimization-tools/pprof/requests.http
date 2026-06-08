@@ -1,0 +1,15 @@
+###
+GET http://localhost:8080/health
+
+###
+GET http://localhost:8080/stats
+
+###
+GET http://localhost:8080/search?q=lucas green
+
+###
+@id = 123
+GET http://localhost:8080/users/{{id}}
+
+###
+POST http://localhost:8080/reindex
