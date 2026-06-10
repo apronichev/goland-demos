@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo App</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; background: #f5f5f5; }
+        h1 { color: #333; }
+        .error { color: #f44336; padding: 10px; background: #ffebee; border-radius: 4px; margin-bottom: 20px; }
+        form.add-form { display: flex; gap: 8px; margin-bottom: 20px; }
+        form.add-form input[type=text] { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
+        form.add-form button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .todo-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: white; margin-bottom: 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .todo-item.done span { text-decoration: line-through; color: #999; }
+        .todo-item span { flex: 1; font-size: 16px; }
+        .todo-item button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-toggle { background: #2196F3; color: white; }
+        .btn-delete { background: #f44336; color: white; }
+        .empty { color: #999; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    {{if .DBError}}
+    <div class="error">⚠️ {{.DBError}}</div>
+    {{end}}
+    <form class="add-form" action="/add" method="post">
+        <input type="text" name="title" placeholder="What needs to be done?" required />
+        <button type="submit">Add</button>
+    </form>
+    {{if not .Todos}}
+    <div class="empty">No todos yet. Add one above!</div>
+    {{else}}
+    {{range .Todos}}
+    <div class="todo-item{{if .Completed}} done{{end}}">
+        <span>{{.Title}}</span>
+        <form action="/toggle/{{.ID}}" method="post" style="margin:0">
+            <button class="btn-toggle" type="submit">{{if .Completed}}Undo{{else}}Done{{end}}</button>
+        </form>
+        <form action="/delete/{{.ID}}" method="post" style="margin:0">
+            <button class="btn-delete" type="submit">Delete</button>
+        </form>
+    </div>
+    {{end}}
+    {{end}}
+</body>
+</html>
