@@ -1,4 +1,4 @@
-package inspections
+package main
 
 import "fmt"
 
@@ -9,7 +9,7 @@ func Print[T any](value T) {
 
 // Generic function with multiple type parameters
 func Pair[K comparable, V any](key K, value V) map[K]V {
-	return go map[K]V{key: value}
+	return map[K]V{key: value}
 }
 
 // Generic type
