@@ -1,0 +1,17 @@
+- Show the Profiler tool window and explain how to run the profiler.
+- Emphasize that no additional setup is required (no `pprof` imports or extra profiling code).
+- Introduce the project: a small backend application that allows us to index data and search through it.
+- Showcase the profiler:
+    - Run the application in profiling mode.
+    - Open the Profiler tool window.
+    - Start CPU profiling.
+    - Open `requests.http` and send a request to start indexing.
+    - Once indexing is complete, stop CPU profiling.
+    - Show the profiling results visualization.
+    - Provide an overview of the available tabs and visualizations (be sure to highlight the line profiler).
+- Identify the bottleneck:
+    - Capture an `allocs` profile.
+    - Demonstrate that email validation allocates a significant amount of memory.
+    - Locate the bottleneck in the email validation function (regular expression compilation).
+    - (Optional) Fix the bottleneck and demonstrate that everything now works well.
+- Demonstrate that profiles can also be exported and imported (you can drag and drop the `allocs.pprof` file located in the project directory).
