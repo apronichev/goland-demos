@@ -8,7 +8,7 @@ import (
 // simple case
 func _(path string, flag bool) error {
 	f, err := os.Open(path) // resource leak!
-	if f == nil {
+	if err != nil {
 		return err
 	}
 
