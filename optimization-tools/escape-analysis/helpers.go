@@ -36,6 +36,8 @@ type Processor interface {
 }
 
 // ProcessAny takes interface - concrete values passed here will escape
+//
+//go:noinline
 func ProcessAny(p Processor) int {
 	return p.Process()
 }
@@ -45,7 +47,7 @@ var processorRegistry []Processor
 
 // RegisterProcessor adds to registry - forces escape
 func RegisterProcessor(p Processor) {
-	//processorRegistry = append(processorRegistry, p)
+	processorRegistry = append(processorRegistry, p)
 }
 
 // RunAllProcessors runs all - can't devirtualize

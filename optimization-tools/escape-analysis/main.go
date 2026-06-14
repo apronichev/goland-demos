@@ -14,9 +14,9 @@ func stackOnly() int {
 }
 
 // returning pointer causes variable to ESCAPE to heap
-func escapeViaReturn() int {
-	return 42
-
+func escapeViaReturn() *int {
+	x := 42
+	return &x
 }
 
 // storing pointer in slice causes ESCAPE
@@ -27,8 +27,6 @@ func escapeViaSlice() []*int {
 	}
 	return result
 }
-
-// main.go:24:30: .autotmp_3 escapes to heap
 
 // closure captures variable, causes ESCAPE
 func escapeViaClosure() func() int {
@@ -51,9 +49,10 @@ func escapeViaPrintln() {
 }
 
 // large object may escape due to size
-func bigArrayEscapes() *[10000]int {
-	var arr [10000]int
-	return &arr
+func bigArrayEscapes() int {
+	var arr [2 * 1024 * 1024]int // 16 MB, over the ~10 MB stack-variable threshold
+	arr[0] = 42
+	return arr[0]
 }
 
 // small object does NOT escape (inline optimization)
@@ -75,11 +74,11 @@ func escapeViaStruct() Container {
 	return Container{data: new(42)}
 }
 
-// used in goroutine causes ESCAPE
+// captured by goroutine causes ESCAPE
 func escapeViaGoroutine() {
-	//x := 123
+	x := 123
 	go func() {
-		fmt.Println("42")
+		fmt.Println(x)
 	}()
 }
 
@@ -93,7 +92,7 @@ func noEscapeParam(p *int) int {
 	return *p + 1
 }
 
-// keys and values stored in map ESCAPE
+// pointer value stored in map ESCAPES (string-literal keys do not allocate)
 func escapeViaMap() map[string]*int {
 	m := make(map[string]*int)
 	m["answer"] = new(42)
@@ -161,10 +160,10 @@ func main() {
 	//_ = BigFunc(y) // y does NOT escape (passed by value)
 
 	// LeakingPointer stores in global - causes escape at call site
-	LeaksPointer(new(30)) // z ESCAPES because LeakingPointer stores it
+	LeaksPointer(new(30)) // value ESCAPES because LeaksPointer stores it
 
 	// ContainsPointer only reads - no escape
-	_ = ContainsPointer(new(40)) // w does NOT escape (only read)
+	_ = ContainsPointer(new(40)) // value does NOT escape (only read)
 
 	// Interface causes boxing - value escapes
 	proc := MyProcessor{value: 50}
@@ -177,14 +176,13 @@ func main() {
 
 	// Slice sink causes escape
 	var slice []*int
-	SliceSink(&slice, new(60)) // val1 ESCAPES (stored in slice)
+	SliceSink(&slice, new(60)) // value ESCAPES (stored in slice)
 
 	// Map sink causes escape
 	m := make(map[string]*int)
-	MapSink(m, "key", new(70)) // val2 ESCAPES (stored in map)
+	MapSink(m, "key", new(70)) // value ESCAPES (stored in map)
 
-	// Return pointer causes escape
-	_ = ReturnPointer(new(80)) // val3 ESCAPES (returned)
+	globalPtr = ReturnPointer(new(80)) // value ESCAPES because caller stores it in a global var
 
 	// NoEscapeWrapper doesn't leak
 	val4 := 90
@@ -192,17 +190,5 @@ func main() {
 
 	_ = subpkg.SpillInt()
 	a := subpkg.NoEscape(1)
-	fmt.Println("%d", a)
-}
-
-type I interface {
-	foobar()
-}
-
-type T struct{}
-
-func (T) foo() {}
-
-func bar(i I) {
-	i.foobar()
+	fmt.Println(a)
 }
