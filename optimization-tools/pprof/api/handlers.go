@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	userCount = 8_000_000
+	userCount = 5_000_000
 	seed      = 42
 )
 

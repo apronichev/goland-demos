@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"net/http"
 
@@ -12,8 +11,6 @@ import (
 const addr = ":8080"
 
 func main() {
-	flag.Parse()
-
 	idx := index.New()
 
 	mux := http.NewServeMux()
