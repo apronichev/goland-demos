@@ -15,7 +15,7 @@ type Config struct {
 
 func Default() Config {
 	return Config{
-		Retries: new(3),
-		Label:   new("default"),
+		Retries: IntPtr(3),
+		Label:   StringPtr("default"),
 	}
 }
